@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>AMS - Admin Panel</title>
+      <meta name="author" content="Ragul Adhithya M">
+      <meta name="description" content="This is an online attendance management system which uses firebase as its database">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="admin-panel.css" />
+    <link rel="shortcut icon" type="image/jpg" href="favicon.jpg"/>
+  </head>
+  <body style=" background: linear-gradient(to right, #33ccff 0%, #33cccc 100%); " oncontextmenu="return false">
+    <nav class="nav" id="nav">
+    <div class="nav--title">
+      <p>Attendance Management System</p>
+    </div>
+    <div class="nav--options--container">
+      <a class="nav--option" href="index.html">Home</a>
+       <div class="dropdown">
+        <button class="dropbtn">Menu ⬇️
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+          <a href="index.html">Home</a>
+        </div>
+    </div>
+  </div>
+</nav>
+    <div class="container">
+      <div class="header">
+        <h1>Admin Panel</h1>
+      </div>
+      <div class="content">
+        <div id="admin-panel">
+          <form>
+            <label>Name</label>
+            <input type="text" id="name" />
+        </form>
+        <form>
+            <label>Roll No.</label>
+            <input type="text" id="rollno" />
+            <div id="buttons">
+              <button type="button" onclick="add()">Add</button>
+              <button type="button" onclick="edit()">Edit</button>
+              <button type="button" onclick="remove()">Remove</button>
+              <button type="button" onclick="generatePdf()">Generate PDF</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-auth.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@latest/dist/jspdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
+    <script src="admin-panel.js"></script>
+  </body>
+</html>
