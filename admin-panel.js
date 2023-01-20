@@ -1,11 +1,11 @@
 var firebaseConfig = {
-    apiKey: "AIzaSyCzUoB9cMlUqoIcAHod00s1jiY1P_IE0BU",
-    authDomain: "lolweb.firebaseapp.com",
-    databaseURL: "https://lolweb-default-rtdb.firebaseio.com",
-    projectId: "lolweb",
-    storageBucket: "lolweb.appspot.com",
-    messagingSenderId: "740706163363",
-    appId: "1:740706163363:web:32ff191ca3973fb2577d16"
+    apiKey: "AIzaSyCa6VW5fzvdJDkYCK8C8baJts0xByLmA7E",
+    authDomain: "ams-ragul.firebaseapp.com",
+    databaseURL: "https://ams-ragul-default-rtdb.firebaseio.com",
+    projectId: "ams-ragul",
+    storageBucket: "ams-ragul.appspot.com",
+    messagingSenderId: "498728490715",
+    appId: "1:498728490715:web:d8a1de94a351f60d6edefe"
 };
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
