@@ -16,8 +16,8 @@ const nameInput = document.querySelector("#name");
 const rollnoInput = document.querySelector("#rollno");
 const rollnoStuInput = document.querySelector("#rollno-stu");
 function add() {
-  const name = nameInput.value;
-  const rollno = rollnoInput.value;
+  const name = nameInput.value.charAt(0).toUpperCase() + nameInput.value.slice(1);
+  const rollno = rollnoInput.value.toUpperCase();
   if (name && rollno) {
     db.collection("students")
       .doc(rollno)
@@ -83,7 +83,6 @@ function removeverify(rollno) {
       .doc(rollno)
       .delete()
       .then(() => {
-        //alert("Student removed successfully!");
         rollnoInput.value = "";
       })
       .catch((error) => {
@@ -93,19 +92,22 @@ function removeverify(rollno) {
     alert("Number not available");
   }
 }
+
 function generatePdf() {
 let students = [];
+let count = 1;
 
 db.collection("students")
   .get()
   .then((querySnapshot) => {
     querySnapshot.forEach((doc) => {
-      const name = doc.data().name;
-      students.push(name);
+      const name = doc.data().name.charAt(0).toUpperCase() + doc.data().name.slice(1);
+      const rollno = doc.data().rollno.toUpperCase();
+      students.push({name, rollno});
     });
 
     let doc = new jsPDF();
-    doc.text(20, 20, students.join(", "));
+    doc.text(20, 20, "\t\t\t\t\tABSENTEES \n\n" + students.map(student => `${count++}) ${student.name} - ${student.rollno}`).join("\n\n"));
     doc.save("attendance.pdf");
   })
   .catch((error) => {
@@ -113,8 +115,9 @@ db.collection("students")
   });
 }
 
+
 function verify() {
-  const rollno = rollnoStuInput.value;
+  const rollno = rollnoStuInput.value.toUpperCase();
 
   if (rollno) {
     db.collection("students")
