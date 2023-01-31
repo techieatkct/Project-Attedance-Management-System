@@ -43,6 +43,8 @@
               <button type="button" onclick="edit()">Edit</button>
               <button type="button" onclick="remove()">Remove</button>
               <button type="button" onclick="generatePdf()">Generate PDF</button>
+              <input type="file" id="fileInput" />
+              <button id="uploadButton">Upload</button>
             </div>
           </form>
         </div>
@@ -52,8 +54,58 @@
     <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-auth.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jspdf@latest/dist/jspdf.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-firestore.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.2.0/papaparse.min.js"></script>
     <script src="admin-panel.js"></script>
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+          apiKey: "AIzaSyCa6VW5fzvdJDkYCK8C8baJts0xByLmA7E",
+          authDomain: "ams-ragul.firebaseapp.com",
+          databaseURL: "https://ams-ragul-default-rtdb.firebaseio.com",
+          projectId: "ams-ragul",
+          storageBucket: "ams-ragul.appspot.com",
+          messagingSenderId: "498728490715",
+          appId: "1:498728490715:web:d8a1de94a351f60d6edefe"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      var db1 = firebase.firestore();
+
+      document.getElementById("uploadButton").addEventListener("click", function() {
+        var fileInput = document.getElementById("fileInput");
+        var file = fileInput.files[0];
+        var reader = new FileReader();
+        reader.readAsText(file);
+        reader.onload = function(event) {
+          var csvData = event.target.result;
+          var data = Papa.parse(csvData, {
+            header: true,
+            dynamicTyping: true,
+            skipEmptyLines: true,
+            complete: function(results) {
+              var rows = results.data;
+              rows.forEach(function(row) {
+                db1.collection("students").add(row)
+                  // .doc(rollno)
+                  // .set({
+                  //   name,
+                  //   rollno,
+                  // })
+                  .then(function(docRef) {
+                    console.log("Document written with ID: ", docRef.id);
+                  })
+                  .catch(function(error) {
+                    console.error("Error adding document: ", error);
+                  });
+              });
+            }
+          });
+        };
+      });
+    </script>
   </body>
 </html>
