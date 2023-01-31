@@ -37,6 +37,48 @@ function add() {
     alert("Please enter name and roll no.");
   }
 }
+
+
+function readExcelData(e) {
+        var file = e.target.files[0];
+        if (!file) return;
+        var reader = new FileReader();
+        reader.onload = function(e) {
+          var data = e.target.result;
+          var workbook = XLSX.read(data, { type: 'binary' });
+          var sheetName = workbook.SheetNames[0];
+          var sheet = workbook.Sheets[sheetName];
+          var range = XLSX.utils.decode_range(sheet['!ref']);
+          for (var rowNum = range.s.r; rowNum <= range.e.r; rowNum++) {
+            var name = sheet[XLSX.utils.encode_cell({r: rowNum, c: 0})].v;
+            var rollno = sheet[XLSX.utils.encode_cell({r: rowNum, c: 1})].v;
+            add1(name, rollno);
+          }
+        };
+        reader.readAsBinaryString(file);
+      }
+
+function add1(name, rollno) {
+  if (name && rollno) {
+    db.collection("students")
+      .doc(rollno)
+      .set({
+        name,
+        rollno,
+      })
+      .then(() => {
+        alert("Student added successfully!");
+        nameInput.value = "";
+        rollnoInput.value = "";
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  } else {
+    alert("Please enter name and roll no.");
+  }
+}
+
 function edit() {
   const name = nameInput.value;
   const rollno = rollnoInput.value;

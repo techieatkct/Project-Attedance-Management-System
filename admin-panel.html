@@ -43,6 +43,8 @@
               <button type="button" onclick="edit()">Edit</button>
               <button type="button" onclick="remove()">Remove</button>
               <button type="button" onclick="generatePdf()">Generate PDF</button>
+              <input type="file" id="fileInput" />
+              <button onclick="readExcelData(event)">Upload</button>
             </div>
           </form>
         </div>
@@ -53,6 +55,7 @@
     <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-auth.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jspdf@latest/dist/jspdf.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.5/xlsx.full.min.js"></script>
     <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
     <script src="admin-panel.js"></script>
   </body>
