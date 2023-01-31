@@ -39,24 +39,35 @@ function add() {
 }
 
 
-function readExcelData(e) {
-        var file = e.target.files[0];
-        if (!file) return;
-        var reader = new FileReader();
-        reader.onload = function(e) {
-          var data = e.target.result;
-          var workbook = XLSX.read(data, { type: 'binary' });
-          var sheetName = workbook.SheetNames[0];
-          var sheet = workbook.Sheets[sheetName];
-          var range = XLSX.utils.decode_range(sheet['!ref']);
-          for (var rowNum = range.s.r; rowNum <= range.e.r; rowNum++) {
-            var name = sheet[XLSX.utils.encode_cell({r: rowNum, c: 0})].v;
-            var rollno = sheet[XLSX.utils.encode_cell({r: rowNum, c: 1})].v;
-            add1(name, rollno);
-          }
-        };
-        reader.readAsBinaryString(file);
-      }
+function readExcelData() {
+    // Create an instance of FileReader to read the uploaded file
+    let reader = new FileReader();
+
+    // Get the uploaded file
+    let file = document.getElementById("excelFile").files[0];
+
+    // Read the file as text
+    reader.readAsText(file);
+
+    // Handle the load event
+    reader.onload = function () {
+        // Get the contents of the file
+        let csv = reader.result;
+
+        // Split the contents into an array of rows
+        let rows = csv.split("\n");
+
+        // Loop through each row
+        for (let i = 0; i < rows.length; i++) {
+            // Split the row into an array of columns
+            let columns = rows[i].split(",");
+
+            // Call the add function with the first column as the name and the second column as the rollno
+            add1(columns[0], columns[1]);
+            console.log("ok!!")
+        }
+    };
+}
 
 function add1(name, rollno) {
   if (name && rollno) {
@@ -67,7 +78,8 @@ function add1(name, rollno) {
         rollno,
       })
       .then(() => {
-        alert("Student added successfully!");
+        //alert("Student added successfully!");
+        console.log("Student added successfully!");
         nameInput.value = "";
         rollnoInput.value = "";
       })

@@ -43,8 +43,7 @@
               <button type="button" onclick="edit()">Edit</button>
               <button type="button" onclick="remove()">Remove</button>
               <button type="button" onclick="generatePdf()">Generate PDF</button>
-              <input type="file" id="fileInput" />
-              <button onclick="readExcelData(event)">Upload</button>
+              <input type="file" id="excelFile" onchange="readExcelData()">
             </div>
           </form>
         </div>
